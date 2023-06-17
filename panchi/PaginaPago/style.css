@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: #dae0d7;
+    color: black;
+  }
+  header {
+    background-color: #66993d;
+    color: #080302;
+    padding: 10px;
+    text-align: center;}
+    
+  #registro {
+    margin: 50px auto;
+    max-width: 500px;
+    padding: 30px;
+    border: 1px solid #66993d;
+    text-align: center;
+  }
+  
+  #volver-inicio {
+    margin-top: 20px;
+  }
+  
+  #volver-inicio button {
+    background-color: #7ebb4c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #volver-inicio button:hover {
+    background-color: #6aa341;
+  }
