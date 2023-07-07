@@ -1,23 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
   
-  const productos = [
-    { id: 1, nombre: "Droseras", precio: 1100, descripcion: "La Drosera es una planta carnívora con hojas cubiertas de una sustancia pegajosa que atrae e atrapa insectos para obtener nutrientes.", imagen: "Imagenes/planta3.jpg" },
-    { id: 2, nombre: "Venus Atrapamoscas", precio: 1600, descripcion: "La Venus Atrapamoscas es una planta carnívora con hojas en forma de boca que se cierran rápidamente cuando un insecto las toca.", imagen: "Imagenes/planta1.jpg" },
-    { id: 3, nombre: "Sarracenias", precio: 1400, descripcion: "La Sarracenia es una planta carnívora con hojas en forma de tubo que actúan como trampas para atrapar e digerir insectos.", imagen: "Imagenes/planta2.jpg" }
-  ];
   const getCharacters = async () => {
     const response = await fetch("./datos.json");
     const data = await response.json();
-    let characters = data.results;
+    let characters = data;
     characters.forEach((character) => {
       let div = document.createElement("div");
       div.innerHTML = `
-      <h2> ${character.name}</h2>
-      <img src="${character.image}</p>
-      <p>${character.gender}</p>
-      <p>${character.status}</p>
+        <h2>${character.nombre}</h2>
+        <img src="${character.imagen}">
+        <p>${character.descripcion}</p>
+        <p>${character.precio}</p>
       `;
-      container.append(div);
+      listaProductos.appendChild(div);
     })
   };
   getCharacters();
