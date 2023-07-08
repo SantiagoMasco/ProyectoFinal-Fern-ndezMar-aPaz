@@ -15,17 +15,13 @@ body {
   color:#000000
 }
 #productos {
-  
   padding: 20px;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
-
 
 .lista-productos {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .producto {
@@ -33,12 +29,6 @@ body {
   padding: 20px;
   box-sizing: border-box;
   text-align: center;
-}
-
-.producto img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
 }
 
 #carrito {
