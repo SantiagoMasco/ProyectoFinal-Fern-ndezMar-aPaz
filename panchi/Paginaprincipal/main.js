@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				} else {
 					carrito.push({ ...producto, cantidad: 1 });
 				}
+        localStorage.setItem('carrito', JSON.stringify(carrito));
 				mostrarCarrito();
 			}
 		} else if (event.target.tagName === "A") {
@@ -88,8 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     mostrarTotalPrecio();
   
-
-    localStorage.setItem('carrito', JSON.stringify(carrito));
   }
 
   function mostrarTotalPrecio() {
@@ -102,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
     carrito = [];
     listaCarrito.innerHTML = "";
     mostrarTotalPrecio();
+    localStorage.removeItem('carrito');
   }
 
   function volverAInicio() {
@@ -116,6 +116,9 @@ document.addEventListener("DOMContentLoaded", function() {
   vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
   volverBtn.addEventListener("click", volverAInicio);
   pagarBtn.addEventListener("click", pagar);
+
+  carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  mostrarCarrito();
 
   mostrarProductos();
 });
