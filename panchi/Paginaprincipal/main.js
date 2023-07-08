@@ -1,21 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
   
   const getCharacters = async () => {
-    const response = await fetch("./datos.json");
-    const data = await response.json();
-    let characters = data;
-    characters.forEach((character) => {
-      let div = document.createElement("div");
-      div.innerHTML = `
+		const response = await fetch("./datos.json");
+		const data = await response.json();
+		let characters = data;
+		characters.forEach((character) => {
+			let div = document.createElement("div");
+			div.innerHTML = `
         <h2>${character.nombre}</h2>
         <img src="${character.imagen}">
         <p>${character.descripcion}</p>
         <p>${character.precio}</p>
+        <button class="comprar" data-id="${character.id}">Agregar al Carrito</button>
       `;
-      listaProductos.appendChild(div);
-    })
-  };
-  getCharacters();
+			listaProductos.appendChild(div);
+		});
+	};
+	getCharacters();
+
+
   const listaProductos = document.getElementById("lista-productos");
   const subtitulo = document.getElementById("subtitulo");
   const listaCarrito = document.getElementById("lista-carrito");
@@ -36,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
       item.innerHTML = `
         <img src="${producto.imagen}" alt="${producto.nombre}">
         <h3>${producto.nombre}</h3>
-        <p>Precio: $${producto.precio}</p>
+        <p> Precio: ${producto.precio}</p>
         <p>${producto.descripcion}</p>
         <button class="comprar" data-id="${producto.id}">Agregar al Carrito</button>
       `;
@@ -50,28 +53,30 @@ document.addEventListener("DOMContentLoaded", function() {
     detalleProducto.style.display = "block";
   }
 
-  function agregarAlCarrito(event) {
-    if (event.target.classList.contains("comprar")) {
-      const productoId = parseInt(event.target.dataset.id);
-      const producto = productos.find(p => p.id === productoId);
-      if (producto) {
-        const productoEnCarrito = carrito.find(item => item.id === productoId);
-        if (productoEnCarrito) {
-          productoEnCarrito.cantidad += 1;
-        } else {
-          carrito.push({ ...producto, cantidad: 1 });
-        }
-        mostrarCarrito();
-      }
-    } else if (event.target.tagName === "A") {
-      const productoId = parseInt(event.target.dataset.id);
-      const producto = productos.find(p => p.id === productoId);
-      if (producto) {
-        mostrarDetalleProducto(producto);
-      }
-    }
-  }
+  async function agregarAlCarrito(event) {
+		const response = await fetch("./datos.json");
+		const productos = await response.json();
+		if (event.target.classList.contains("comprar")) {
+			const productoId = parseInt(event.target.dataset.id);
+			const producto = productos.find((p) => p.id === productoId);
+			if (producto) {
+				const productoEnCarrito = carrito.find((item) => item.id === productoId);
+				if (productoEnCarrito) {
+					productoEnCarrito.cantidad += 1;
+				} else {
+					carrito.push({ ...producto, cantidad: 1 });
+				}
+				mostrarCarrito();
+			}
+		} else if (event.target.tagName === "A") {
+			const productoId = parseInt(event.target.dataset.id);
 
+			const producto = productos.find((p) => p.id === productoId);
+			if (producto) {
+				mostrarDetalleProducto(producto);
+			}
+		}
+	}
   function mostrarCarrito() {
     listaCarrito.innerHTML = "";
     carrito.forEach(item => {
@@ -82,6 +87,9 @@ document.addEventListener("DOMContentLoaded", function() {
       listaCarrito.appendChild(listItem);
     });
     mostrarTotalPrecio();
+  
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
   }
 
   function mostrarTotalPrecio() {
